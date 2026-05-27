@@ -592,11 +592,11 @@
         <label>Quantos colaboradores tem a empresa? <span class="req">*</span></label>
         <select id="tamanho" name="tamanho">
           <option value="">Selecione...</option>
-          <option value="1-9">Menos de 10</option>
-          <option value="10-49">10 a 49</option>
-          <option value="50-149">50 a 149</option>
-          <option value="150-499">150 a 499</option>
-          <option value="500+">Mais de 500</option>
+          <option value="menos-10">Menos de 10</option>
+          <option value="10-100">Entre 10 a 100</option>
+          <option value="101-500">Entre 101 e 500</option>
+          <option value="501-1000">Entre 501 e 1.000</option>
+          <option value="1000+">Acima de 1.000</option>
         </select>
         <p class="error-msg">Por favor, selecione uma opção.</p>
       </div>
@@ -611,6 +611,20 @@
           <option value="20m-50m">R$ 20 milhões a R$ 50 milhões</option>
           <option value="50m+">Acima de R$ 50 milhões</option>
           <option value="nao-sei">Não sei informar</option>
+        </select>
+        <p class="error-msg">Por favor, selecione uma opção.</p>
+      </div>
+
+      <div class="field">
+        <label for="sob-gestao">Quantos colaboradores você tem sob sua gestão (direta e indiretamente)? <span class="req">*</span></label>
+        <select id="sob-gestao" name="sob-gestao">
+          <option value="">Selecione...</option>
+          <option value="0">Nenhum</option>
+          <option value="1-5">1 a 5</option>
+          <option value="6-20">6 a 20</option>
+          <option value="21-50">21 a 50</option>
+          <option value="51-100">51 a 100</option>
+          <option value="100+">Mais de 100</option>
         </select>
         <p class="error-msg">Por favor, selecione uma opção.</p>
       </div>
@@ -686,7 +700,7 @@
       <h2>O que te fez chegar até aqui agora?</h2>
 
       <div class="field" id="f-motivo">
-        <label for="motivo">O que te fez ter interesse na mentoria E2P? <span class="req">*</span></label>
+        <label for="motivo">O que te fez ter interesse na Mentoria de gestão E2P? <span class="req">*</span></label>
         <textarea id="motivo" name="motivo" placeholder="Conte com suas palavras o que te motivou a buscar uma mentoria neste momento..."></textarea>
         <p class="error-msg">Por favor, preencha este campo.</p>
       </div>
@@ -807,6 +821,7 @@
     if (n === 2) {
       ok = requireRadio('f-cargo', 'cargo', 'err-cargo') && ok;
       ok = requireSelect('tamanho') && ok;
+      ok = requireSelect('sob-gestao') && ok;
       ok = requireSelect('faturamento') && ok;
       ok = requireText('f-setor', 'setor') && ok;
     }
@@ -912,6 +927,7 @@
       origem:         document.querySelector('input[name="origem"]:checked')?.value,
       cargo:          document.querySelector('input[name="cargo"]:checked')?.value,
       tamanho:        document.getElementById('tamanho')?.value,
+      sob_gestao:     document.getElementById('sob-gestao')?.value,
       faturamento:    document.getElementById('faturamento')?.value,
       setor:          document.getElementById('setor')?.value,
       dores:          [...document.querySelectorAll('input[name="dores"]:checked')].map(e => e.value).join(', '),
@@ -928,29 +944,3 @@
 
     if (['50-149','150-499','500+'].includes(data.tamanho)) score += 20;
     else if (data.tamanho === '10-49') score += 10;
-
-    if (['5m-20m','20m-50m','50m+'].includes(data.faturamento)) score += 20;
-    else if (data.faturamento === '1m-5m') score += 10;
-
-    if (['10k-15k','15k+'].includes(data.investimento)) score += 25;
-    else if (data.investimento === '5k-10k') score += 15;
-    else if (data.investimento === 'desconhece') score += 5;
-
-    data._score = score;
-    data._qualificacao = score >= 70 ? 'ALTA' : score >= 45 ? 'MEDIA' : 'BAIXA';
-
-    // ── ENVIO (Formspree) ──
-    const FORMSPREE_ID = 'mkokarwj';
-
-    fetch(`https://formspree.io/f/${FORMSPREE_ID}`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-      body: JSON.stringify(data)
-    });
-
-    // Exibe tela de agradecimento independente do envio
-    showThanks();
-  }
-</script>
-</body>
-</html>
