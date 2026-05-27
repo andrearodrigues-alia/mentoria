@@ -528,7 +528,7 @@
       </div>
 
       <div class="field" id="f-origem">
-        <label>Como chegou até aqui? <span class="req">*</span></label>
+        <label>Como chegou até aqui? <span class="hint">(opcional)</span></label>
         <div class="options-grid col2">
           <label class="option-card">
             <input type="radio" name="origem" value="linkedin" />
@@ -881,7 +881,6 @@
     if (n === 1) {
       ok = requireText('f-nome', 'nome') && ok;
       ok = requireEmail('f-email', 'email') && ok;
-      ok = requireRadio('f-origem', 'origem', 'err-origem') && ok;
     }
 
     if (n === 2) {
@@ -1043,7 +1042,6 @@
       headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
       body: JSON.stringify(data)
     });
-    }
 
     // Exibe tela de agradecimento independente do envio
     showThanks();
