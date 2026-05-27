@@ -1,0 +1,1053 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Vamos conversar? — Andréa Rodrigues | Aliá</title>
+  <style>
+    :root {
+      --petroleo: #0f4c5c;
+      --petroleo-dark: #0a3a47;
+      --petroleo-light: #e8f2f5;
+      --rosa: #b46b89;
+      --rosa-light: #f5eaf0;
+      --texto: #1a2a30;
+      --cinza: #6b7280;
+      --cinza-claro: #f4f6f7;
+      --branco: #ffffff;
+      --borda: #dde6ea;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Georgia', 'Times New Roman', serif;
+      background: var(--petroleo-light);
+      color: var(--texto);
+      min-height: 100vh;
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      padding: 32px 16px 64px;
+    }
+
+    .wrapper {
+      width: 100%;
+      max-width: 680px;
+    }
+
+    /* HEADER */
+    .header {
+      text-align: center;
+      margin-bottom: 36px;
+    }
+    .header .logo {
+      font-family: 'Georgia', serif;
+      font-size: 13px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--petroleo);
+      font-weight: normal;
+      margin-bottom: 8px;
+    }
+    .header h1 {
+      font-size: clamp(22px, 4vw, 30px);
+      font-weight: normal;
+      color: var(--petroleo-dark);
+      line-height: 1.35;
+      margin-bottom: 10px;
+    }
+    .header p {
+      font-size: 15px;
+      color: var(--cinza);
+      font-style: italic;
+      line-height: 1.6;
+    }
+
+    /* PROGRESS */
+    .progress-wrap {
+      margin-bottom: 32px;
+    }
+    .progress-labels {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 8px;
+    }
+    .progress-labels span {
+      font-size: 11px;
+      color: var(--cinza);
+      letter-spacing: 0.5px;
+    }
+    .progress-bar-bg {
+      height: 4px;
+      background: var(--borda);
+      border-radius: 99px;
+      overflow: hidden;
+    }
+    .progress-bar-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--petroleo), var(--rosa));
+      border-radius: 99px;
+      transition: width 0.4s ease;
+    }
+
+    /* CARD */
+    .card {
+      background: var(--branco);
+      border-radius: 16px;
+      padding: clamp(24px, 5vw, 48px);
+      box-shadow: 0 2px 16px rgba(15,76,92,0.08);
+    }
+
+    /* STEPS */
+    .step { display: none; animation: fadeIn 0.35s ease; }
+    .step.active { display: block; }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .step-eyebrow {
+      font-size: 11px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--rosa);
+      font-family: 'Arial', sans-serif;
+      margin-bottom: 10px;
+    }
+    .step h2 {
+      font-size: clamp(18px, 3.5vw, 24px);
+      font-weight: normal;
+      color: var(--petroleo-dark);
+      line-height: 1.4;
+      margin-bottom: 6px;
+    }
+    .step .sub {
+      font-size: 14px;
+      color: var(--cinza);
+      margin-bottom: 28px;
+      line-height: 1.6;
+      font-style: italic;
+    }
+
+    /* CAMPOS */
+    .field {
+      margin-bottom: 20px;
+    }
+    label {
+      display: block;
+      font-size: 14px;
+      color: var(--petroleo-dark);
+      margin-bottom: 6px;
+      font-family: 'Arial', sans-serif;
+      font-weight: 600;
+    }
+    label .hint {
+      font-weight: normal;
+      color: var(--cinza);
+      font-size: 12px;
+      margin-left: 4px;
+    }
+    input[type="text"],
+    input[type="email"],
+    input[type="tel"],
+    select,
+    textarea {
+      width: 100%;
+      padding: 12px 14px;
+      border: 1.5px solid var(--borda);
+      border-radius: 8px;
+      font-size: 15px;
+      font-family: 'Arial', sans-serif;
+      color: var(--texto);
+      background: var(--branco);
+      outline: none;
+      transition: border-color 0.2s;
+      appearance: none;
+    }
+    input:focus, select:focus, textarea:focus {
+      border-color: var(--petroleo);
+    }
+    textarea { resize: vertical; min-height: 90px; }
+    select {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%230f4c5c' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 14px center;
+      padding-right: 36px;
+      cursor: pointer;
+    }
+
+    /* RADIO / CHECKBOX CARDS */
+    .options-grid {
+      display: grid;
+      gap: 10px;
+    }
+    .options-grid.col2 {
+      grid-template-columns: 1fr 1fr;
+    }
+    @media (max-width: 480px) {
+      .options-grid.col2 { grid-template-columns: 1fr; }
+    }
+
+    .option-card {
+      position: relative;
+      cursor: pointer;
+    }
+    .option-card input[type="radio"],
+    .option-card input[type="checkbox"] {
+      position: absolute;
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+    .option-card .option-label {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 13px 15px;
+      border: 1.5px solid var(--borda);
+      border-radius: 10px;
+      font-size: 14px;
+      font-family: 'Arial', sans-serif;
+      color: var(--texto);
+      line-height: 1.45;
+      background: var(--branco);
+      transition: border-color 0.2s, background 0.2s;
+    }
+    .option-card .option-label .dot {
+      width: 18px;
+      height: 18px;
+      min-width: 18px;
+      border-radius: 50%;
+      border: 2px solid var(--borda);
+      margin-top: 1px;
+      background: var(--branco);
+      transition: all 0.2s;
+    }
+    .option-card .option-label .sq {
+      width: 18px;
+      height: 18px;
+      min-width: 18px;
+      border-radius: 4px;
+      border: 2px solid var(--borda);
+      margin-top: 1px;
+      background: var(--branco);
+      transition: all 0.2s;
+    }
+    .option-card input:checked ~ .option-label {
+      border-color: var(--petroleo);
+      background: var(--petroleo-light);
+    }
+    .option-card input:checked ~ .option-label .dot {
+      background: var(--petroleo);
+      border-color: var(--petroleo);
+      box-shadow: inset 0 0 0 4px white;
+    }
+    .option-card input:checked ~ .option-label .sq {
+      background: var(--petroleo);
+      border-color: var(--petroleo);
+    }
+    .option-card input[type="checkbox"]:checked ~ .option-label .sq::after {
+      content: '';
+      display: block;
+      width: 10px;
+      height: 6px;
+      border-left: 2px solid white;
+      border-bottom: 2px solid white;
+      transform: rotate(-45deg) translate(2px, -1px);
+      margin: auto;
+    }
+
+    /* ESCALA */
+    .scale-wrap {
+      margin-top: 4px;
+    }
+    .scale-options {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+    .scale-btn {
+      cursor: pointer;
+    }
+    .scale-btn input[type="radio"] {
+      position: absolute;
+      opacity: 0;
+      width: 0; height: 0;
+    }
+    .scale-btn .scale-num {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 42px;
+      height: 42px;
+      border: 1.5px solid var(--borda);
+      border-radius: 8px;
+      font-size: 15px;
+      font-family: 'Arial', sans-serif;
+      color: var(--cinza);
+      background: var(--branco);
+      transition: all 0.2s;
+      cursor: pointer;
+    }
+    .scale-btn input:checked ~ .scale-num {
+      background: var(--petroleo);
+      border-color: var(--petroleo);
+      color: white;
+      font-weight: bold;
+    }
+    .scale-labels {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 6px;
+    }
+    .scale-labels span {
+      font-size: 11px;
+      color: var(--cinza);
+      font-family: 'Arial', sans-serif;
+    }
+
+    /* NAVEGAÇÃO */
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 32px;
+      gap: 12px;
+    }
+    .btn-prev {
+      background: none;
+      border: none;
+      font-size: 14px;
+      color: var(--cinza);
+      cursor: pointer;
+      font-family: 'Arial', sans-serif;
+      padding: 10px 0;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: color 0.2s;
+    }
+    .btn-prev:hover { color: var(--petroleo); }
+    .btn-prev svg { width: 16px; height: 16px; }
+
+    .btn-next {
+      background: var(--petroleo);
+      color: white;
+      border: none;
+      padding: 14px 32px;
+      border-radius: 99px;
+      font-size: 15px;
+      font-family: 'Arial', sans-serif;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.15s;
+      letter-spacing: 0.3px;
+    }
+    .btn-next:hover {
+      background: var(--petroleo-dark);
+      transform: translateY(-1px);
+    }
+    .btn-next:active { transform: translateY(0); }
+    .btn-next.rosa {
+      background: var(--rosa);
+    }
+    .btn-next.rosa:hover {
+      background: #9d5a75;
+    }
+
+    /* DIVISOR */
+    .divider {
+      border: none;
+      border-top: 1px solid var(--borda);
+      margin: 24px 0;
+    }
+
+    /* DESTAQUE INICIAL */
+    .intro-box {
+      background: var(--petroleo-light);
+      border-left: 3px solid var(--petroleo);
+      padding: 14px 18px;
+      border-radius: 0 8px 8px 0;
+      font-size: 14px;
+      color: var(--petroleo-dark);
+      line-height: 1.6;
+      margin-bottom: 28px;
+      font-style: italic;
+    }
+
+    /* THANK YOU */
+    .thankyou {
+      text-align: center;
+      padding: 20px 0;
+    }
+    .thankyou .icon {
+      width: 64px;
+      height: 64px;
+      background: var(--rosa-light);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 20px;
+    }
+    .thankyou .icon svg {
+      width: 30px;
+      height: 30px;
+      color: var(--rosa);
+    }
+    .thankyou h2 {
+      font-size: 24px;
+      color: var(--petroleo-dark);
+      margin-bottom: 10px;
+      font-weight: normal;
+    }
+    .thankyou p {
+      font-size: 15px;
+      color: var(--cinza);
+      line-height: 1.7;
+      max-width: 440px;
+      margin: 0 auto 24px;
+    }
+    .thankyou .next-steps {
+      background: var(--cinza-claro);
+      border-radius: 12px;
+      padding: 20px 24px;
+      text-align: left;
+      max-width: 420px;
+      margin: 0 auto;
+    }
+    .thankyou .next-steps h3 {
+      font-size: 13px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--petroleo);
+      font-family: 'Arial', sans-serif;
+      margin-bottom: 12px;
+    }
+    .thankyou .next-steps ul {
+      list-style: none;
+      padding: 0;
+    }
+    .thankyou .next-steps ul li {
+      font-size: 14px;
+      font-family: 'Arial', sans-serif;
+      color: var(--texto);
+      padding: 6px 0;
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      line-height: 1.5;
+    }
+    .thankyou .next-steps ul li::before {
+      content: '→';
+      color: var(--rosa);
+      font-size: 13px;
+      margin-top: 1px;
+      flex-shrink: 0;
+    }
+
+    /* FOOTER */
+    .footer {
+      text-align: center;
+      margin-top: 28px;
+      font-size: 12px;
+      color: var(--cinza);
+      font-family: 'Arial', sans-serif;
+    }
+    .footer a { color: var(--petroleo); text-decoration: none; }
+
+    /* REQUIRED */
+    .req { color: var(--rosa); margin-left: 2px; }
+
+    /* ERRO */
+    .error-msg {
+      font-size: 12px;
+      color: #c0392b;
+      margin-top: 4px;
+      font-family: 'Arial', sans-serif;
+      display: none;
+    }
+    .field.has-error input,
+    .field.has-error select,
+    .field.has-error textarea {
+      border-color: #c0392b;
+    }
+
+    /* QUALIFICAÇÃO INTERNA (oculta do usuário) */
+    #score-debug { display: none; }
+  </style>
+</head>
+<body>
+
+<div class="wrapper">
+
+  <!-- HEADER -->
+  <div class="header">
+    <p class="logo">Andréa Rodrigues · Aliá Consultoria</p>
+    <h1>Vamos conversar?</h1>
+    <p>Responda a estas perguntas com calma.<br>Elas me ajudam a entender se o que ofereço faz sentido para o seu momento.</p>
+  </div>
+
+  <!-- PROGRESS -->
+  <div class="progress-wrap">
+    <div class="progress-labels">
+      <span id="step-label">Etapa 1 de 5</span>
+      <span id="step-pct">20%</span>
+    </div>
+    <div class="progress-bar-bg">
+      <div class="progress-bar-fill" id="progress-fill" style="width:20%"></div>
+    </div>
+  </div>
+
+  <!-- CARD -->
+  <div class="card">
+
+    <!-- ═══════════════════════════════ STEP 1 ═══════════════════════════════ -->
+    <div class="step active" id="step-1">
+      <p class="step-eyebrow">Apresentação</p>
+      <h2>Antes de tudo — quem é você?</h2>
+      <p class="sub">Promessa: seus dados ficam comigo. Nada de spam, jamais.</p>
+
+      <div class="field" id="f-nome">
+        <label for="nome">Nome completo <span class="req">*</span></label>
+        <input type="text" id="nome" name="nome" placeholder="Como prefere ser chamada(o)?" />
+        <p class="error-msg">Por favor, informe seu nome.</p>
+      </div>
+
+      <div class="field" id="f-email">
+        <label for="email">E-mail <span class="req">*</span></label>
+        <input type="email" id="email" name="email" placeholder="seu@email.com" />
+        <p class="error-msg">Por favor, informe um e-mail válido.</p>
+      </div>
+
+      <div class="field" id="f-whatsapp">
+        <label for="whatsapp">WhatsApp <span class="hint">(opcional — mas facilita muito o contato)</span></label>
+        <input type="tel" id="whatsapp" name="whatsapp" placeholder="(11) 99999-9999" />
+      </div>
+
+      <div class="field" id="f-origem">
+        <label>Como chegou até aqui? <span class="req">*</span></label>
+        <div class="options-grid col2">
+          <label class="option-card">
+            <input type="radio" name="origem" value="linkedin" />
+            <span class="option-label"><span class="dot"></span>LinkedIn</span>
+          </label>
+          <label class="option-card">
+            <input type="radio" name="origem" value="instagram" />
+            <span class="option-label"><span class="dot"></span>Instagram</span>
+          </label>
+          <label class="option-card">
+            <input type="radio" name="origem" value="indicacao" />
+            <span class="option-label"><span class="dot"></span>Indicação</span>
+          </label>
+          <label class="option-card">
+            <input type="radio" name="origem" value="outro" />
+            <span class="option-label"><span class="dot"></span>Outro canal</span>
+          </label>
+        </div>
+        <p class="error-msg" id="err-origem">Selecione uma opção.</p>
+      </div>
+
+      <div class="nav">
+        <span></span>
+        <button class="btn-next" onclick="goNext(1)">Continuar →</button>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════ STEP 2 ═══════════════════════════════ -->
+    <div class="step" id="step-2">
+      <p class="step-eyebrow">Seu contexto</p>
+      <h2>Me conte sobre você e sua empresa.</h2>
+      <p class="sub">Essas informações me ajudam a entender se o meu programa é adequado para o seu momento.</p>
+
+      <div class="field" id="f-cargo">
+        <label>Qual é o seu papel na empresa? <span class="req">*</span></label>
+        <div class="options-grid">
+          <label class="option-card">
+            <input type="radio" name="cargo" value="socio-ceo" />
+            <span class="option-label"><span class="dot"></span>Sócio(a) / CEO / Fundador(a)</span>
+          </label>
+          <label class="option-card">
+            <input type="radio" name="cargo" value="diretor" />
+            <span class="option-label"><span class="dot"></span>Diretor(a) / Sócio(a)-Diretor(a)</span>
+          </label>
+          <label class="option-card">
+            <input type="radio" name="cargo" value="gestor" />
+            <span class="option-label"><span class="dot"></span>Gerente / Coordenador(a) / Líder de área</span>
+          </label>
+          <label class="option-card">
+            <input type="radio" name="cargo" value="outro" />
+            <span class="option-label"><span class="dot"></span>Outro</span>
+          </label>
+        </div>
+        <p class="error-msg" id="err-cargo">Selecione uma opção.</p>
+      </div>
+
+      <div class="field" id="f-tamanho">
+        <label>Quantos colaboradores tem a empresa? <span class="req">*</span></label>
+        <select id="tamanho" name="tamanho">
+          <option value="">Selecione...</option>
+          <option value="1-9">Menos de 10</option>
+          <option value="10-49">10 a 49</option>
+          <option value="50-149">50 a 149</option>
+          <option value="150-499">150 a 499</option>
+          <option value="500+">Mais de 500</option>
+        </select>
+        <p class="error-msg">Por favor, selecione uma opção.</p>
+      </div>
+
+      <div class="field" id="f-faturamento">
+        <label>Faixa de faturamento anual aproximada? <span class="req">*</span></label>
+        <select id="faturamento" name="faturamento">
+          <option value="">Selecione...</option>
+          <option value="ate1m">Até R$ 1 milhão</option>
+          <option value="1m-5m">R$ 1 milhão a R$ 5 milhões</option>
+          <option value="5m-20m">R$ 5 milhões a R$ 20 milhões</option>
+          <option value="20m-50m">R$ 20 milhões a R$ 50 milhões</option>
+          <option value="50m+">Acima de R$ 50 milhões</option>
+        </select>
+        <p class="error-msg">Por favor, selecione uma opção.</p>
+      </div>
+
+      <div class="field" id="f-setor">
+        <label for="setor">Setor / segmento de atuação <span class="req">*</span></label>
+        <input type="text" id="setor" name="setor" placeholder="Ex.: Tecnologia, Saúde, Varejo, Serviços..." />
+        <p class="error-msg">Por favor, informe o setor.</p>
+      </div>
+
+      <div class="nav">
+        <button class="btn-prev" onclick="goPrev(2)">
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M10 3L5 8l5 5"/></svg>
+          Voltar
+        </button>
+        <button class="btn-next" onclick="goNext(2)">Continuar →</button>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════ STEP 3 ═══════════════════════════════ -->
+    <div class="step" id="step-3">
+      <p class="step-eyebrow">Seu momento atual</p>
+      <h2>O que está pesando mais para você agora?</h2>
+      <p class="sub">Marque tudo que ressoa — sem filtro.</p>
+
+      <div class="field" id="f-dores">
+        <label>Situações que refletem o seu dia a dia: <span class="req">*</span><span class="hint">(pode marcar mais de uma)</span></label>
+        <div class="options-grid">
+          <label class="option-card">
+            <input type="checkbox" name="dores" value="operacional" />
+            <span class="option-label"><span class="sq"></span>Passo a maior parte do tempo apagando incêndios. O estratégico fica sempre para depois.</span>
+          </label>
+          <label class="option-card">
+            <input type="checkbox" name="dores" value="gestores" />
+            <span class="option-label"><span class="sq"></span>Meus gestores não entregam com autonomia — tudo ainda volta para mim.</span>
+          </label>
+          <label class="option-card">
+            <input type="checkbox" name="dores" value="processos" />
+            <span class="option-label"><span class="sq"></span>Os processos são desorganizados: retrabalho constante, gargalos e perda de produtividade.</span>
+          </label>
+          <label class="option-card">
+            <input type="checkbox" name="dores" value="estagnacao" />
+            <span class="option-label"><span class="sq"></span>A empresa cresceu em volume, mas sinto que a gestão não cresceu junto — nem eu.</span>
+          </label>
+          <label class="option-card">
+            <input type="checkbox" name="dores" value="solidao" />
+            <span class="option-label"><span class="sq"></span>Me sinto sozinha(o) nas decisões mais difíceis. Não tenho com quem pensar em alto nível.</span>
+          </label>
+          <label class="option-card">
+            <input type="checkbox" name="dores" value="cultura" />
+            <span class="option-label"><span class="sq"></span>Percebo desmotivação e perda de talentos — a cultura está em risco.</span>
+          </label>
+          <label class="option-card">
+            <input type="checkbox" name="dores" value="clareza" />
+            <span class="option-label"><span class="sq"></span>Falta clareza de rumo: a equipe está dispersa e as iniciativas não se conectam.</span>
+          </label>
+        </div>
+        <p class="error-msg" id="err-dores">Selecione ao menos uma situação.</p>
+      </div>
+
+      <div class="field">
+        <label>Com que intensidade esse(s) desafio(s) impactam o seu trabalho? <span class="req">*</span></label>
+        <p style="font-size:13px;color:var(--cinza);font-family:'Arial',sans-serif;margin-bottom:10px;">1 = pouco impacto · 10 = impacto muito alto</p>
+        <div class="scale-wrap">
+          <div class="scale-options" id="scale-intensidade">
+            <!-- gerado via JS -->
+          </div>
+          <div class="scale-labels">
+            <span>Pouco impacto</span>
+            <span>Muito alto</span>
+          </div>
+        </div>
+        <p class="error-msg" id="err-escala">Selecione um valor.</p>
+      </div>
+
+      <div class="field" id="f-tentou">
+        <label>Você já tentou resolver isso antes? Como? <span class="hint">(opcional)</span></label>
+        <textarea name="tentou" id="tentou" placeholder="Ex.: contratei uma consultoria, tentei delegar mas não funcionou, li sobre gestão mas não consegui aplicar..."></textarea>
+      </div>
+
+      <div class="nav">
+        <button class="btn-prev" onclick="goPrev(3)">
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M10 3L5 8l5 5"/></svg>
+          Voltar
+        </button>
+        <button class="btn-next" onclick="goNext(3)">Continuar →</button>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════ STEP 4 ═══════════════════════════════ -->
+    <div class="step" id="step-4">
+      <p class="step-eyebrow">Intenção e prontidão</p>
+      <h2>O que te fez chegar até aqui agora?</h2>
+      <p class="sub">Essas perguntas me ajudam a entender se este é o momento certo para você.</p>
+
+      <div class="field" id="f-motivo">
+        <label for="motivo">Por que agora? O que mudou ou chegou ao limite? <span class="req">*</span></label>
+        <textarea id="motivo" name="motivo" placeholder="Conte com suas palavras o que te motivou a buscar uma mentoria neste momento..."></textarea>
+        <p class="error-msg">Por favor, preencha este campo.</p>
+      </div>
+
+      <div class="field" id="f-resultado">
+        <label for="resultado">Como seria, para você, um resultado concreto daqui a 6 meses? <span class="req">*</span></label>
+        <textarea id="resultado" name="resultado" placeholder="Seja específica(o): o que teria mudado na empresa e na sua rotina?"></textarea>
+        <p class="error-msg">Por favor, preencha este campo.</p>
+      </div>
+
+      <div class="field" id="f-decisor">
+        <label>Você é quem decide sobre esse investimento? <span class="req">*</span></label>
+        <div class="options-grid col2">
+          <label class="option-card">
+            <input type="radio" name="decisor" value="sim" />
+            <span class="option-label"><span class="dot"></span>Sim, decido sozinha(o)</span>
+          </label>
+          <label class="option-card">
+            <input type="radio" name="decisor" value="parcial" />
+            <span class="option-label"><span class="dot"></span>Preciso alinhar com sócio(s)</span>
+          </label>
+          <label class="option-card">
+            <input type="radio" name="decisor" value="nao" />
+            <span class="option-label"><span class="dot"></span>Não, outra pessoa decide</span>
+          </label>
+        </div>
+        <p class="error-msg" id="err-decisor">Selecione uma opção.</p>
+      </div>
+
+      <div class="field" id="f-investimento">
+        <label>Qual faixa de investimento você considera viável para uma mentoria como essa? <span class="req">*</span></label>
+        <div class="options-grid">
+          <label class="option-card">
+            <input type="radio" name="investimento" value="ate500" />
+            <span class="option-label"><span class="dot"></span>Até R$ 500/mês</span>
+          </label>
+          <label class="option-card">
+            <input type="radio" name="investimento" value="500-1200" />
+            <span class="option-label"><span class="dot"></span>R$ 500 a R$ 1.200/mês</span>
+          </label>
+          <label class="option-card">
+            <input type="radio" name="investimento" value="1200-2500" />
+            <span class="option-label"><span class="dot"></span>R$ 1.200 a R$ 2.500/mês</span>
+          </label>
+          <label class="option-card">
+            <input type="radio" name="investimento" value="2500+" />
+            <span class="option-label"><span class="dot"></span>Acima de R$ 2.500/mês</span>
+          </label>
+        </div>
+        <p class="error-msg" id="err-investimento">Selecione uma opção.</p>
+      </div>
+
+      <div class="nav">
+        <button class="btn-prev" onclick="goPrev(4)">
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M10 3L5 8l5 5"/></svg>
+          Voltar
+        </button>
+        <button class="btn-next" onclick="goNext(4)">Continuar →</button>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════ STEP 5 ═══════════════════════════════ -->
+    <div class="step" id="step-5">
+      <p class="step-eyebrow">Próximos passos</p>
+      <h2>Quase lá — quando podemos conversar?</h2>
+      <p class="sub">Indique sua preferência. Faço o possível para encaixar na sua agenda.</p>
+
+      <div class="field" id="f-disponibilidade">
+        <label>Quais períodos costumam funcionar melhor para você? <span class="req">*</span><span class="hint">(marque mais de um se quiser)</span></label>
+        <div class="options-grid col2">
+          <label class="option-card">
+            <input type="checkbox" name="disponibilidade" value="seg-sex-manha" />
+            <span class="option-label"><span class="sq"></span>Seg–Sex, manhã</span>
+          </label>
+          <label class="option-card">
+            <input type="checkbox" name="disponibilidade" value="seg-sex-tarde" />
+            <span class="option-label"><span class="sq"></span>Seg–Sex, tarde</span>
+          </label>
+          <label class="option-card">
+            <input type="checkbox" name="disponibilidade" value="seg-sex-noite" />
+            <span class="option-label"><span class="sq"></span>Seg–Sex, noite</span>
+          </label>
+          <label class="option-card">
+            <input type="checkbox" name="disponibilidade" value="fds" />
+            <span class="option-label"><span class="sq"></span>Fins de semana</span>
+          </label>
+        </div>
+        <p class="error-msg" id="err-disponibilidade">Selecione ao menos uma opção.</p>
+      </div>
+
+      <div class="field">
+        <label for="extra">Há algo mais que queira me contar? <span class="hint">(opcional)</span></label>
+        <textarea id="extra" name="extra" placeholder="Qualquer contexto adicional que achar importante..."></textarea>
+      </div>
+
+      <div class="nav">
+        <button class="btn-prev" onclick="goPrev(5)">
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M10 3L5 8l5 5"/></svg>
+          Voltar
+        </button>
+        <button class="btn-next rosa" onclick="submitForm()">Enviar ✓</button>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════ THANK YOU ═══════════════════════════════ -->
+    <div class="step" id="step-thanks">
+      <div class="thankyou">
+        <div class="icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/>
+          </svg>
+        </div>
+        <h2>Recebi! Obrigada.</h2>
+        <p>Li tudo com atenção antes de responder.<br>Se fizer sentido avançarmos, entro em contato em até <strong>48 horas úteis</strong> para agendar nossa conversa.</p>
+        <div class="next-steps">
+          <h3>O que acontece agora</h3>
+          <ul>
+            <li>Analiso suas respostas com cuidado</li>
+            <li>Se houver fit, te contato pelo WhatsApp ou e-mail</li>
+            <li>Agendamos uma conversa de 30 minutos sem compromisso</li>
+            <li>Você decide se faz sentido seguir em frente</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /card -->
+
+  <div class="footer">
+    Aliá Consultoria · <a href="https://www.linkedin.com/in/andrear" target="_blank">LinkedIn</a> · Seus dados são tratados com total sigilo.
+  </div>
+
+</div><!-- /wrapper -->
+
+<script>
+  // ── ESCALA ──
+  const scaleWrap = document.getElementById('scale-intensidade');
+  for (let i = 1; i <= 10; i++) {
+    const lbl = document.createElement('label');
+    lbl.className = 'scale-btn';
+    lbl.innerHTML = `<input type="radio" name="intensidade" value="${i}" /><span class="scale-num">${i}</span>`;
+    scaleWrap.appendChild(lbl);
+  }
+
+  // ── NAVEGAÇÃO ──
+  const TOTAL = 5;
+  let current = 1;
+
+  function showStep(n) {
+    document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
+    document.getElementById('step-' + n).classList.add('active');
+    const pct = Math.round((n / TOTAL) * 100);
+    document.getElementById('progress-fill').style.width = pct + '%';
+    document.getElementById('step-label').textContent = 'Etapa ' + n + ' de ' + TOTAL;
+    document.getElementById('step-pct').textContent = pct + '%';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function showThanks() {
+    document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
+    document.getElementById('step-thanks').classList.add('active');
+    document.querySelector('.progress-wrap').style.display = 'none';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function goPrev(from) {
+    current = from - 1;
+    showStep(current);
+  }
+
+  // ── VALIDAÇÃO ──
+  function validateStep(n) {
+    let ok = true;
+
+    if (n === 1) {
+      ok = requireText('f-nome', 'nome') && ok;
+      ok = requireEmail('f-email', 'email') && ok;
+      ok = requireRadio('f-origem', 'origem', 'err-origem') && ok;
+    }
+
+    if (n === 2) {
+      ok = requireRadio('f-cargo', 'cargo', 'err-cargo') && ok;
+      ok = requireSelect('tamanho') && ok;
+      ok = requireSelect('faturamento') && ok;
+      ok = requireText('f-setor', 'setor') && ok;
+    }
+
+    if (n === 3) {
+      ok = requireCheckbox('dores', 'err-dores') && ok;
+      ok = requireRadio(null, 'intensidade', 'err-escala') && ok;
+    }
+
+    if (n === 4) {
+      ok = requireTextarea('f-motivo', 'motivo') && ok;
+      ok = requireTextarea('f-resultado', 'resultado') && ok;
+      ok = requireRadio('f-decisor', 'decisor', 'err-decisor') && ok;
+      ok = requireRadio('f-investimento', 'investimento', 'err-investimento') && ok;
+    }
+
+    if (n === 5) {
+      ok = requireCheckbox('disponibilidade', 'err-disponibilidade') && ok;
+    }
+
+    return ok;
+  }
+
+  function requireText(fieldId, inputId) {
+    const wrap = document.getElementById(fieldId);
+    const val  = document.getElementById(inputId)?.value.trim();
+    const err  = wrap?.querySelector('.error-msg');
+    if (!val) {
+      wrap?.classList.add('has-error');
+      if (err) err.style.display = 'block';
+      return false;
+    }
+    wrap?.classList.remove('has-error');
+    if (err) err.style.display = 'none';
+    return true;
+  }
+
+  function requireTextarea(fieldId, inputId) {
+    return requireText(fieldId, inputId);
+  }
+
+  function requireEmail(fieldId, inputId) {
+    const wrap = document.getElementById(fieldId);
+    const val  = document.getElementById(inputId)?.value.trim();
+    const err  = wrap?.querySelector('.error-msg');
+    const re   = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!val || !re.test(val)) {
+      wrap?.classList.add('has-error');
+      if (err) err.style.display = 'block';
+      return false;
+    }
+    wrap?.classList.remove('has-error');
+    if (err) err.style.display = 'none';
+    return true;
+  }
+
+  function requireSelect(inputId) {
+    const el   = document.getElementById(inputId);
+    const wrap = el?.closest('.field');
+    const err  = wrap?.querySelector('.error-msg');
+    if (!el?.value) {
+      wrap?.classList.add('has-error');
+      if (err) err.style.display = 'block';
+      return false;
+    }
+    wrap?.classList.remove('has-error');
+    if (err) err.style.display = 'none';
+    return true;
+  }
+
+  function requireRadio(fieldId, name, errId) {
+    const checked = document.querySelector(`input[name="${name}"]:checked`);
+    const err = document.getElementById(errId);
+    if (!checked) {
+      if (err) err.style.display = 'block';
+      return false;
+    }
+    if (err) err.style.display = 'none';
+    return true;
+  }
+
+  function requireCheckbox(name, errId) {
+    const checked = document.querySelectorAll(`input[name="${name}"]:checked`);
+    const err = document.getElementById(errId);
+    if (checked.length === 0) {
+      if (err) err.style.display = 'block';
+      return false;
+    }
+    if (err) err.style.display = 'none';
+    return true;
+  }
+
+  // ── AVANÇAR ──
+  function goNext(from) {
+    if (!validateStep(from)) return;
+    current = from + 1;
+    showStep(current);
+  }
+
+  // ── SUBMIT ──
+  function submitForm() {
+    if (!validateStep(5)) return;
+
+    // Coleta todos os dados
+    const data = {
+      nome:           document.getElementById('nome')?.value,
+      email:          document.getElementById('email')?.value,
+      whatsapp:       document.getElementById('whatsapp')?.value,
+      origem:         document.querySelector('input[name="origem"]:checked')?.value,
+      cargo:          document.querySelector('input[name="cargo"]:checked')?.value,
+      tamanho:        document.getElementById('tamanho')?.value,
+      faturamento:    document.getElementById('faturamento')?.value,
+      setor:          document.getElementById('setor')?.value,
+      dores:          [...document.querySelectorAll('input[name="dores"]:checked')].map(e => e.value).join(', '),
+      intensidade:    document.querySelector('input[name="intensidade"]:checked')?.value,
+      tentou:         document.getElementById('tentou')?.value,
+      motivo:         document.getElementById('motivo')?.value,
+      resultado:      document.getElementById('resultado')?.value,
+      decisor:        document.querySelector('input[name="decisor"]:checked')?.value,
+      investimento:   document.querySelector('input[name="investimento"]:checked')?.value,
+      disponibilidade:[...document.querySelectorAll('input[name="disponibilidade"]:checked')].map(e => e.value).join(', '),
+      extra:          document.getElementById('extra')?.value,
+    };
+
+    // ── SCORE DE QUALIFICAÇÃO (interno) ──
+    let score = 0;
+    if (['socio-ceo','diretor'].includes(data.cargo)) score += 30;
+    else if (data.cargo === 'gestor') score += 15;
+
+    if (['50-149','150-499','500+'].includes(data.tamanho)) score += 20;
+    else if (data.tamanho === '10-49') score += 10;
+
+    if (['5m-20m','20m-50m','50m+'].includes(data.faturamento)) score += 20;
+    else if (data.faturamento === '1m-5m') score += 10;
+
+    if (data.decisor === 'sim') score += 15;
+    else if (data.decisor === 'parcial') score += 8;
+
+    if (['1200-2500','2500+'].includes(data.investimento)) score += 15;
+    else if (data.investimento === '500-1200') score += 8;
+
+    const intensidade = parseInt(data.intensidade || 0);
+    if (intensidade >= 7) score += 10;
+    else if (intensidade >= 4) score += 5;
+
+    data._score = score;
+    data._qualificacao = score >= 70 ? 'ALTA' : score >= 45 ? 'MEDIA' : 'BAIXA';
+
+    // ── ENVIO (Formspree) ──
+    const FORMSPREE_ID = 'mkokarwj';
+
+    fetch(`https://formspree.io/f/${FORMSPREE_ID}`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify(data)
+    });
+    }
+
+    // Exibe tela de agradecimento independente do envio
+    showThanks();
+  }
+</script>
+</body>
+</html>
