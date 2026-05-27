@@ -814,8 +814,7 @@
     let ok = true;
 
     if (n === 1) {
-      ok = requireText('f-nome', 'nome') && ok;
-      ok = requireEmail('f-email', 'email') && ok;
+      ok = requireText('f-email', 'email') && ok;
     }
 
     if (n === 2) {
@@ -943,4 +942,30 @@
     else if (['gerente','coordenador'].includes(data.cargo)) score += 15;
 
     if (['50-149','150-499','500+'].includes(data.tamanho)) score += 20;
-    else if (data.taman
+    else if (data.tamanho === '10-49') score += 10;
+
+    if (['5m-20m','20m-50m','50m+'].includes(data.faturamento)) score += 20;
+    else if (data.faturamento === '1m-5m') score += 10;
+
+    if (['10k-15k','15k+'].includes(data.investimento)) score += 25;
+    else if (data.investimento === '5k-10k') score += 15;
+    else if (data.investimento === 'desconhece') score += 5;
+
+    data._score = score;
+    data._qualificacao = score >= 70 ? 'ALTA' : score >= 45 ? 'MEDIA' : 'BAIXA';
+
+    // ── ENVIO (Formspree) ──
+    const FORMSPREE_ID = 'mkokarwj';
+
+    fetch(`https://formspree.io/f/${FORMSPREE_ID}`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify(data)
+    });
+
+    // Exibe tela de agradecimento independente do envio
+    showThanks();
+  }
+</script>
+</body>
+</html>
