@@ -526,6 +526,11 @@
         <input type="tel" id="whatsapp" name="whatsapp" placeholder="(11) 99999-9999" />
       </div>
 
+      <div class="field" id="f-linkedin">
+        <label for="linkedin">LinkedIn <span class="hint">(opcional)</span></label>
+        <input type="text" id="linkedin" name="linkedin" placeholder="linkedin.com/in/seu-perfil" />
+      </div>
+
       <div class="field" id="f-origem">
         <label>Como chegou até aqui? <span class="hint">(opcional)</span></label>
         <div class="options-grid col2">
@@ -923,6 +928,7 @@
       nome:           document.getElementById('nome')?.value,
       email:          document.getElementById('email')?.value,
       whatsapp:       document.getElementById('whatsapp')?.value,
+      linkedin:       document.getElementById('linkedin')?.value,
       origem:         document.querySelector('input[name="origem"]:checked')?.value,
       cargo:          document.querySelector('input[name="cargo"]:checked')?.value,
       tamanho:        document.getElementById('tamanho')?.value,
